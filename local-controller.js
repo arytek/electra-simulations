@@ -1,23 +1,39 @@
-const { localcontroller } = require('./../../ElectraJS/electra');
+const electra = require('./../../ElectraJS/electra');
+const ip = require('ip');
 
-localcontroller.listen()
-    .then((port) => {
-        console.log('Electra port opened. Listening for connections on port: ', port)
+// The address of the running device.
+let address = process.argv[2] || process.env.IP || ip.address() || "127.0.0.1";
+
+// The device will be publically accessible on this port.
+const port = process.env.PORT || 4374;
+
+// Add port number to the end of the address string.
+if (!address.includes(':')) address = address.concat(':' + port);
+
+console.log('====== Welcome to Electra local-controller emulator ======');
+console.log('=================== By Aryan Nateghnia ===================');
+
+let localcontroller = electra.localcontroller(address);
+console.log('\nStarting server... \n');
+
+localcontroller.listen(port)
+    .then((address) => {
+        console.log('Electra port opened.');
+        console.log('Listening for Electra connections at address: ', address);
     });
 
-    localcontroller.onConnection()
-    .then((device_data) => {
-        console.log('Connection request received: ', device_data);
-    });
+localcontroller.onConnection(
+    function success(deviceData) {
+        console.log('\nConnection request received: ', deviceData);
+    }
+);
 
-// generator.addDevice("10.10.10.2", "4734")
-//     .then((response) => {
-//         console.log('Device successfully added: ', response);
-//     })
-//     .catch((error) => {
-//         console.log('Unable to add device: ', error);
-//     });
-
-// generator.sendEnergy(); // to nearest neigbour that is 'storage'.
-// generator.sendEnergy(generator.getNeighbour('A124DS2')); // By ID.
-console.log('done');
+localcontroller.onEnergyContract(
+    function success(eContract) {
+        console.log('\nIncoming eContract... ', eContract);
+        console.log('\nSuccessfully routed eContract to: ', eContract.sink);
+    },
+    function failure(error) {
+        console.log('\nUnable to add device: ', error);
+    }
+);

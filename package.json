@@ -16,5 +16,8 @@
     "routing"
   ],
   "author": "Aryan Nateghnia",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ip": "^1.1.5"
+  }
 }
