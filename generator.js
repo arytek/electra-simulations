@@ -1,26 +1,80 @@
-const { generator } = require('./../../ElectraJS/electra');
+const electra = require('./../../ElectraJS/electra');
+const ip = require('ip');
 
-let wattage = 45;
-let device_type = "generator";
+// Set random initial wattage value, then every 2s generate and set a new wattage value.
+// Our energy generating device will be generating anywhere between 300W and 350W.
+let wattage = getRandomIntInclusive(300, 350); 
+startWattageGenerator(300, 350);
+
+// The address of the running device.
+let address = process.argv[2] || process.env.IP || ip.address() || "127.0.0.1";
+
+// The device will be publically accessible on this port.
+const port = process.env.PORT || 4374;
+
+// Add port number to the end of the address string.
+if (!address.includes(':')) address = address.concat(':' + port);
+
+
+console.log('========= Welcome to Electra generator emulator ==========');
+console.log('=================== By Aryan Nateghnia ===================');
+
+let generator = electra.generator(address);
+console.log('\nStarting server... \n');
 
 generator.listen()
-    .then((port) => {
-        console.log('Electra port opened. Listening for connections on port: ', port)
+    .then((address) => {
+        console.log('Electra port opened.');
+        console.log('Listening for Electra connections at address: ', address);
     });
 
-generator.onConnection()
-    .then((device_data) => {
-        console.log('Connection request received: ', device_data);
-    });
+generator.onConnection(
+    function success(deviceData) {
+        console.log('\nConnection request received: ', deviceData);
+    }
+);
 
-generator.addDevice("10.10.10.2", "4734")
+// Add local controller...
+generator.addDevice("127.0.0.100")
     .then((response) => {
-        console.log('Device successfully added: ', response);
+        console.log('\nDevice successfully added: ', response);
+        sendEnergy();
     })
     .catch((error) => {
-        console.log('Unable to add device: ', error);
+        console.log('\nUnable to add device: ', error);
     });
 
-// generator.sendEnergy(); // to nearest neigbour that is 'storage'.
-// generator.sendEnergy(generator.getNeighbour('A124DS2')); // By ID.
-console.log('done');
+
+function sendEnergy() {
+    console.log('\nSending energy to nearest energy storage provider...');
+    generator.sendEnergy(wattage)
+        .then((eContract) => {
+            console.log('\nSuccessfully sent energy to', eContract.sink.deviceId, ': ', eContract);
+        })
+        .catch((error) => {
+        console.log('\nUnable to send energy: ', error);
+        })
+        .finally(() => {
+            // After the previous eContract is sent, send another one.
+            sendEnergy();
+        });
+}
+
+/**
+ * Sets a new random wattage value between the given number ranges provided.
+ * This function calls itself (sets a new wattage) every 2 seconds.
+ * @param {object} minWattage
+ * @param {object} maxWattage
+ * @public
+ */
+function startWattageGenerator(minWattage, maxWattage) {
+    setInterval(function setWattage() {
+        wattage = getRandomIntInclusive(minWattage, maxWattage);
+    }, 2000);
+}
+
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
