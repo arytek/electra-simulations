@@ -16,7 +16,7 @@ if (!address.includes(':')) address = address.concat(':' + port);
 console.log('========== Welcome to Electra storage emulator ===========');
 console.log('=================== By Aryan Nateghnia ===================');
 
-let storage = electra.storage(address);
+let storage = electra.storage(address, 'Lithium Ion 4KWh Battery');
 console.log('\nStarting server... \n');
 
 storage.listen(port)
