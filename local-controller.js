@@ -13,7 +13,7 @@ if (!address.includes(':')) address = address.concat(':' + port);
 console.log('====== Welcome to Electra local-controller emulator ======');
 console.log('=================== By Aryan Nateghnia ===================');
 
-let localcontroller = electra.localcontroller(address);
+let localcontroller = electra.localcontroller(address, 'Local Controller');
 console.log('\nStarting server... \n');
 
 localcontroller.listen(port)
