@@ -19,7 +19,7 @@ if (!address.includes(':')) address = address.concat(':' + port);
 console.log('========= Welcome to Electra generator emulator ==========');
 console.log('=================== By Aryan Nateghnia ===================');
 
-let generator = electra.generator(address);
+let generator = electra.generator(address, '350W Solar Panel');
 console.log('\nStarting server... \n');
 
 generator.listen()
@@ -38,15 +38,20 @@ generator.onConnection(
 generator.addDevice("127.0.0.100")
     .then((response) => {
         console.log('\nDevice successfully added: ', response);
+        // Operations to do only once local controller is added.
         sendEnergy();
+        sendMetadata();
     })
     .catch((error) => {
         console.log('\nUnable to add device: ', error);
     });
 
 
+/**
+ * Local functions.
+ */
+
 function sendEnergy() {
-    console.log('\nSending energy to nearest energy storage provider...');
     generator.sendEnergy(wattage)
         .then((eContract) => {
             console.log('\nSuccessfully sent energy to', eContract.sink.deviceId, ': ', eContract);
@@ -59,6 +64,19 @@ function sendEnergy() {
             sendEnergy();
         });
 }
+
+function sendMetadata() {
+    generator.sendMetadataToLC(wattage)
+        .then(console.log('Metadata transmitted successfully'))
+        .catch((error) => {
+            console.log('Unable to transfer metadeta: ', error);
+        })
+        .finally(() => {
+            // After the previous metadata packet is sent, send another one.
+            sendMetadata();
+        });
+}
+
 
 /**
  * Sets a new random wattage value between the given number ranges provided.
