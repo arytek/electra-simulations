@@ -1,0 +1,23 @@
+{
+  "name": "energy-storage",
+  "version": "1.0.0",
+  "description": "Emulation of an energy storage device. Implements the Electra protocol.",
+  "main": "storage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "energy",
+    "storage",
+    "electricity",
+    "electronics",
+    "electra",
+    "emulator",
+    "emulation"
+  ],
+  "author": "Aryan Nateghnia",
+  "license": "ISC",
+  "dependencies": {
+    "ip": "^1.1.5"
+  }
+}
