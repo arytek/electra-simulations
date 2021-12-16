@@ -1,0 +1,23 @@
+{
+  "name": "local-controller",
+  "version": "1.0.0",
+  "description": "Emulation of a local controller device. Implements the Electra protocol.",
+  "main": "local-controller.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "emulation",
+    "emulator",
+    "electra",
+    "electronics",
+    "electricity",
+    "router",
+    "routing"
+  ],
+  "author": "Aryan Nateghnia",
+  "license": "ISC",
+  "dependencies": {
+    "ip": "^1.1.5"
+  }
+}

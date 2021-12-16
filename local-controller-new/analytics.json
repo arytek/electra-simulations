@@ -1,0 +1,17 @@
+{
+  "generator": {
+    "currentWattage": null
+  },
+  "grid": {
+    "netProfitLoss": null
+  },
+  "localcontroller": {
+    "todaysEnergyTransfers": null
+  },
+  "smartswitch": {
+    "energyConsumption": null
+  },
+  "storage": {
+    "currentCapacity": null
+  }
+}
