@@ -1,0 +1,22 @@
+{
+  "name": "smart-switch",
+  "version": "1.0.0",
+  "description": "Emulation of an electronic smart switch. Implements the Electra protocol.",
+  "main": "switch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "emulation",
+    "emulator",
+    "switch",
+    "electronics",
+    "electricity",
+    "electra"
+  ],
+  "author": "Aryan Nateghnia",
+  "license": "ISC",
+  "dependencies": {
+    "ip": "^1.1.5"
+  }
+}
