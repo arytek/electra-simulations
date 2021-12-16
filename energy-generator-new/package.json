@@ -1,0 +1,26 @@
+{
+  "name": "energy-generator",
+  "version": "1.0.0",
+  "description": "Emulation of an energy generating device. Implements the Electra protocol.",
+  "main": "generator.js",
+  "scripts": {
+    "server": "nodemon generator.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "emulator",
+    "emulation",
+    "energy",
+    "generator",
+    "solar",
+    "energy"
+  ],
+  "author": "Aryan Nateghnia",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "ip": "^1.1.5"
+  }
+}
