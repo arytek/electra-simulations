@@ -1,0 +1,24 @@
+{
+  "name": "energy-grid",
+  "version": "1.0.0",
+  "description": "Emulation of an energy-grid. Implements the Electra protocol.",
+  "main": "grid.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "emulator",
+    "emulation",
+    "energy",
+    "generator",
+    "grid",
+    "central",
+    "simulate",
+    "simulator"
+  ],
+  "author": "Aryan Nateghnia",
+  "license": "ISC",
+  "dependencies": {
+    "ip": "^1.1.5"
+  }
+}
